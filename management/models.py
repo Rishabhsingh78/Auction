@@ -11,5 +11,10 @@ class Auction(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_closed = models.BooleanField(default = True)
 
+    def save(self, *args, **kwargs):
+        if self.current_bid == 0:
+            self.current_bid = self.starting_bid
+        super().save(*args, **kwargs)
+        
     def __str__(self):
         return self.title
