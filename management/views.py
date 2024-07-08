@@ -2,7 +2,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Auction
+from .models import Auction,User
+
 from .serializers import AuctionSerializer,UpdateAuctionSerializer
 
 @api_view(['POST'])
@@ -45,4 +46,5 @@ def close_auction(request,auction_id):
     auction.is_closed = True
     auction.save()
     serializer = AuctionSerializer(auction)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+
+    return Response({"message": "Auction closed successfully.",'data':serializer.data}, status=status.HTTP_200_OK)
